@@ -55,6 +55,7 @@ models/
 *.log
 logs/
 *.txt
+!requirements.txt
 
 # Test outputs
 .pytest_cache/
