@@ -1,0 +1,86 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+.python-version
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Auto-generated mock datasets (large files - only include small version if needed)
+mco_mock_data_big.zip
+mco_mock_data_*.zip
+
+# Generated outputs (runs are timestamped and can be large)
+runs/
+outputs/
+reports/
+
+# Model artifacts (can be regenerated)
+*.joblib
+models/
+
+# Logs
+*.log
+logs/
+*.txt
+
+# Test outputs
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Jupyter Notebook (if you add any later)
+.ipynb_checkpoints/
+*.ipynb
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+
+# OS specific
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Data files (optional - uncomment if you want to exclude data)
+# *.csv
+# *.zip
+# *.parquet
+# *.feather
