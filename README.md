@@ -85,6 +85,21 @@ runs/20260120_134500_big/
 
 
 
+## Demo Screenshot
+
+Explore the Streamlit demo dashboard to view tail capture, totals, and top risk accounts:
+
+![MCO Demo Dashboard](assets/dashboard_screenshot.png)
+
+Launch locally:
+
+```bash
+source .venv/bin/activate
+streamlit run streamlit_app.py --server.headless true --server.port 8501
+```
+
+Then open http://localhost:8501.
+
 ## Data Requirements
 
 Four CSV files inside the ZIP (schema reference: [generate_big_dataset.py](generate_big_dataset.py)):
