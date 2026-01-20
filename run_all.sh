@@ -10,8 +10,7 @@ if [[ -f ".venv/bin/activate" ]]; then
   # shellcheck disable=SC1091
   source ".venv/bin/activate"
 else
-  echo "[ERROR] .venv not found in: $ROOT_DIR"
-  exit 1
+  echo "[WARNING] .venv not found (running without virtual environment)"
 fi
 
 ZIP=""
@@ -50,9 +49,9 @@ run_with_spinner() {
     local end
     end=$(date +%s)
     local total=$(( end - start ))
-    printf "\r%s ✓  %ds total\n" "$label" "$total"
+    printf "\r%s âœ“  %ds total\n" "$label" "$total"
   else
-    printf "\r%s ✗ (exit %d)\n" "$label" "$status"
+    printf "\r%s âœ— (exit %d)\n" "$label" "$status"
     return $status
   fi
 }
@@ -165,6 +164,6 @@ PY
 run_with_spinner "[3/3] Summarizing tail capture..." tail_summary
 
 echo ""
-echo "✅ Done."
+echo "âœ… Done."
 echo "Run folder:"
 echo "  $ROOT_DIR/$RUN_DIR"
