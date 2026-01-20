@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 set -euo pipefail
 
 MODE="${1:-big}"   # small | big | custom
@@ -49,9 +49,9 @@ run_with_spinner() {
     local end
     end=$(date +%s)
     local total=$(( end - start ))
-    printf "\r%s âœ“  %ds total\n" "$label" "$total"
+    printf "\r%s Ã¢Å“â€œ  %ds total\n" "$label" "$total"
   else
-    printf "\r%s âœ— (exit %d)\n" "$label" "$status"
+    printf "\r%s Ã¢Å“â€” (exit %d)\n" "$label" "$status"
     return $status
   fi
 }
@@ -63,7 +63,7 @@ elif [[ "$MODE" == "big" ]]; then
   ZIP="mco_mock_data_big.zip"
   DATA_TAG="big"
   # Step 0: Generate dataset (label derived from generator constants)
-  LABEL=$(python3 - <<'PY'
+  LABEL=$(python - <<'PY'
 import importlib.util, pathlib
 fp = pathlib.Path('generate_big_dataset.py')
 spec = importlib.util.spec_from_file_location('gen', fp)
@@ -75,7 +75,7 @@ days = getattr(mod, 'DAYS_OF_HISTORY', 'n/a')
 print(f"[0/3] Generating dataset ({years}yr, {customers:,} customers, {days} days)...")
 PY
 )
-  run_with_spinner "$LABEL" python3 generate_big_dataset.py --out "$ZIP"
+  run_with_spinner "$LABEL" python generate_big_dataset.py --out "$ZIP"
 elif [[ "$MODE" == "custom" ]]; then
   ZIP="${2:-}"
   DATA_TAG="custom"
@@ -109,11 +109,11 @@ echo "MCO OC Runner (timestamped)"
 echo "Mode     : $MODE"
 echo "ZIP      : $ZIP"
 echo "RUN_DIR  : $RUN_DIR"
-echo "Python   : $(python3 --version)"
+echo "Python   : $(python --version)"
 echo "=========================================="
 
 # --- Save metadata snapshot (simple) ---
-python3 - <<PY
+python - <<PY
 import json, os, sys, platform, datetime
 meta = {
   "run_ts": "${TS}",
@@ -131,14 +131,14 @@ PY
 # --- Train ---
 echo ""
 if [[ "$MODE" == "big" ]]; then
-  run_with_spinner "[1/3] Training model..." python3 run_train.py --zip "$ZIP" --out "$OUT_DIR" --mode train
+  run_with_spinner "[1/3] Training model..." python run_train.py --zip "$ZIP" --out "$OUT_DIR" --mode train
 else
-  run_with_spinner "[1/3] Training & reporting (small)..." python3 run_train.py --zip "$ZIP" --out "$OUT_DIR" --mode report
+  run_with_spinner "[1/3] Training & reporting (small)..." python run_train.py --zip "$ZIP" --out "$OUT_DIR" --mode report
 fi
 
 # --- Report pack (existing) ---
 echo ""
-run_with_spinner "[2/3] Building base reports..." python3 make_mco_report.py \
+run_with_spinner "[2/3] Building base reports..." python make_mco_report.py \
   --labels "$OUT_DIR/mco_labels_long.csv" \
   --pred "$OUT_DIR/predictions_long.csv" \
   --out "$RPT_DIR"
@@ -150,7 +150,7 @@ echo ""
 echo "[3/3] Tail capture summary..."
 
 tail_summary() {
-  python3 - <<PY
+  python - <<PY
 import pandas as pd, os
 path = os.path.join("${RPT_DIR}", "tail_capture_by_horizon_overall.csv")
 df = pd.read_csv(path)
@@ -164,6 +164,6 @@ PY
 run_with_spinner "[3/3] Summarizing tail capture..." tail_summary
 
 echo ""
-echo "âœ… Done."
+echo "Ã¢Å“â€¦ Done."
 echo "Run folder:"
 echo "  $ROOT_DIR/$RUN_DIR"
